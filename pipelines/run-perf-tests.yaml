@@ -6,7 +6,7 @@ pool:
 variables:
   - group: JMETER_TERRAFORM_SETTINGS
   - name: JMETER_DIRECTORY_INPUT
-    value: $(System.DefaultWorkingDirectory)/jmeter
+    value: $(System.DefaultWorkingDirectory)/perf-testing-scenrios
   - name: JMETER_DIRECTORY_OUTPUT
     value: $(System.DefaultWorkingDirectory)/results
   - name: TERRAFORM_VERSION
