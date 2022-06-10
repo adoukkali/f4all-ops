@@ -13,7 +13,10 @@ variables:
     value: 0.13.2
 
 steps:
-
+  - task: Docker@2
+    inputs:
+      containerRegistry: 'f4all.acr'
+      command: 'login'
   - task: AzureCLI@2
     displayName: 'SETUP: Validate JMeter Docker Image'
     inputs:
