@@ -60,7 +60,7 @@ variable "JMETER_DOCKER_PORT" {
 
 variable "JMETER_ACR_NAME" {
   type    = string
-  default = ""
+  default = "f4all.azurecr.io"
 }
 
 variable "JMETER_ACR_RESOURCE_GROUP_NAME" {
