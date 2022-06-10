@@ -17,7 +17,7 @@ steps:
   - task: AzureCLI@2
     displayName: 'SETUP: Validate JMeter Docker Image'
     inputs:
-      azureSubscription: 'Paiement à l’utilisation(1)(1ad44334-f828-4bde-a49e-7de4f43ce1ba)'
+      azureSubscription: 'Paiement à l’utilisation(1ad44334-f828-4bde-a49e-7de4f43ce1ba)'
       scriptType: 'bash'
       scriptLocation: 'inlineScript'
       inlineScript: |
@@ -33,15 +33,15 @@ steps:
   - task: AzureCLI@2
     displayName: 'SETUP: Prepare Terraform Credentials'
     inputs:
-      azureSubscription: $(AZURE_SERVICE_CONNECTION_NAME)
-      scriptType: bash
-      scriptLocation: inlineScript
-      addSpnToEnvironment: true
+      azureSubscription: 'Paiement à l’utilisation(1ad44334-f828-4bde-a49e-7de4f43ce1ba)'
+      scriptType: 'bash'
+      scriptLocation: 'inlineScript'
       inlineScript: |
         echo "##vso[task.setvariable variable=ARM_CLIENT_ID]$servicePrincipalId"
         echo "##vso[task.setvariable variable=ARM_CLIENT_SECRET]$servicePrincipalKey"
         echo "##vso[task.setvariable variable=ARM_TENANT_ID]$tenantId"
         echo "##vso[task.setvariable variable=ARM_SUBSCRIPTION_ID]$AZURE_SUBSCRIPTION_ID"
+      addSpnToEnvironment: true
 
   - script: |
       wget https://releases.hashicorp.com/terraform/$(TERRAFORM_VERSION)/terraform_$(TERRAFORM_VERSION)_linux_amd64.zip
@@ -74,10 +74,9 @@ steps:
 
   - task: AzureCLI@2
     inputs:
-      azureSubscription: $(AZURE_SERVICE_CONNECTION_NAME)
-      workingDirectory: ./terraform
-      scriptType: bash
-      scriptLocation: inlineScript
+      azureSubscription: 'Paiement à l’utilisation(1ad44334-f828-4bde-a49e-7de4f43ce1ba)'
+      scriptType: 'bash'
+      scriptLocation: 'inlineScript'
       inlineScript: |
         RG=$(terraform output resource_group_name)
         NAME=$(terraform output jmeter_controller_name)
@@ -87,26 +86,26 @@ steps:
           sleep 20
         done
         echo "`date`: Finished!"
+      workingDirectory: './terraform'
     displayName: 'TEST: Wait Test Execution'
 
   - task: AzureCLI@2
     inputs:
-      azureSubscription: $(AZURE_SERVICE_CONNECTION_NAME)
-      workingDirectory: ./terraform
-      scriptType: bash
-      scriptLocation: inlineScript
+      azureSubscription: 'Paiement à l’utilisation(1ad44334-f828-4bde-a49e-7de4f43ce1ba)'
+      scriptType: 'bash'
+      scriptLocation: 'inlineScript'
       inlineScript: |
         az container logs -g $(terraform output resource_group_name) -n $(terraform output jmeter_controller_name)
         RESOURCE_GROUP=$(terraform output resource_group_name)
         echo -n $(terraform output jmeter_workers_names) | xargs -t -d "," -I '{}' -n1 az container logs -g $RESOURCE_GROUP -n {}
+      workingDirectory: './terraform'
     displayName: 'RESULTS: Collect JMeter Controller and Worker Logs'
 
   - task: AzureCLI@2
     inputs:
-      azureSubscription: $(AZURE_SERVICE_CONNECTION_NAME)
-      workingDirectory: ./terraform
-      scriptType: bash
-      scriptLocation: inlineScript
+      azureSubscription: 'Paiement à l’utilisation(1ad44334-f828-4bde-a49e-7de4f43ce1ba)'
+      scriptType: 'bash'
+      scriptLocation: 'inlineScript'
       inlineScript: |
         SAS_END=`date -u -d "30 minutes" '+%Y-%m-%dT%H:%MZ'` && \
         JMETER_SAS=`az storage share generate-sas -n jmeter --account-name $(terraform output storage_account_name) --account-key $(terraform output storage_account_key) --https-only --permissions dlrw --expiry $SAS_END -o tsv` && \
@@ -114,6 +113,7 @@ steps:
           $(terraform output storage_file_share_url)?$JMETER_SAS \
           "$(JMETER_DIRECTORY_OUTPUT)" \
           --recursive
+      workingDirectory: './terraform'
     displayName: 'RESULTS: Get JMeter Artifacts'
 
   - script: |
