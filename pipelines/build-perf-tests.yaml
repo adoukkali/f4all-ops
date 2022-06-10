@@ -1,0 +1,12 @@
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  - group: TIR_PERF_GROUP
+
+steps:
+  - task: Bash@3
+    inputs:
+      targetType: 'inline'
+      script: |
+        bash scripts/00-build.sh
