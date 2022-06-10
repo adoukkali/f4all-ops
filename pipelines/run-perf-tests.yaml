@@ -25,6 +25,7 @@ steps:
       scriptLocation: 'inlineScript'
       inlineScript: |
         az acr login -n $(TF_VAR_JMETER_ACR_NAME)
+        docker login https://f4all.azurecr.io -u $(TF_VAR_ACR_LOGIN) -p $(TF_VAR_ACR_PASS)
         docker pull $(TF_VAR_JMETER_DOCKER_IMAGE)
 
   - script: |
