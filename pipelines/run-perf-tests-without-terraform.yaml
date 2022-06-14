@@ -38,6 +38,6 @@ steps:
       az role assignment create --assignee "296d820d-4bb2-4fd3-89d1-c6c01017d26e" \
       --role "Load Test Contributor" \
       --scope /subscriptions/1ad44334-f828-4bde-a49e-7de4f43ce1ba/resourceGroups/infra-01_group \
-      --subscription "1ad44334-f828-4bde-a49e-7de4f43ce1ba"
+      --subscription 'Paiement à l’utilisation(1ad44334-f828-4bde-a49e-7de4f43ce1ba)'
 
 
