@@ -19,14 +19,14 @@ steps:
       command: 'login'
   
   - task: AzureCLI@2
-  displayName: Azure CLI
-  inputs:
-    azureSubscription: 'Paiement à l’utilisation(1ad44334-f828-4bde-a49e-7de4f43ce1ba)'
-    scriptType: ps
-    scriptLocation: inlineScript
-    inlineScript: |
-      az --version
-      az account show
+    displayName: Azure CLI
+    inputs:
+      azureSubscription: 'Paiement à l’utilisation(1ad44334-f828-4bde-a49e-7de4f43ce1ba)'
+      scriptType: ps
+      scriptLocation: inlineScript
+      inlineScript: |
+        az --version
+        az account show
   - task: AzureCLI@2
     displayName: 'SETUP: Validate JMeter Docker Image'
     inputs:
