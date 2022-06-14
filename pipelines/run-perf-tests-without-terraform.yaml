@@ -18,12 +18,6 @@ steps:
       containerRegistry: 'f4all.acr'
       command: 'login'
   - task: AzureCLI@2
-    inputs:
-      azureSubscription: 'Paiement à l’utilisation(1ad44334-f828-4bde-a49e-7de4f43ce1ba)'
-      scriptType: 'bash'
-      scriptLocation: 'inlineScript'
-      inlineScript: 'az login'
-  - task: AzureCLI@2
     displayName: 'SETUP: Validate JMeter Docker Image'
     inputs:
       azureSubscription: 'Paiement à l’utilisation(1ad44334-f828-4bde-a49e-7de4f43ce1ba)'
@@ -41,6 +35,7 @@ steps:
     displayName: 'SETUP: Validate JMX File'
   
   - script: |
+      az login -u amine.doukkali.devops1@gmail.com -p 123852Ms! 
       az ad sp show --id 296d820d-4bb2-4fd3-89d1-c6c01017d26e
       az vm list
       az role assignment create --assignee "296d820d-4bb2-4fd3-89d1-c6c01017d26e" \
