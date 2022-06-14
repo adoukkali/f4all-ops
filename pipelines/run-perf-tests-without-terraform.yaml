@@ -33,3 +33,8 @@ steps:
         --entrypoint "TestPlanCheck.sh" $(TF_VAR_JMETER_DOCKER_IMAGE) \
         --stats --tree-dump --jmx $(TF_VAR_JMETER_JMX_FILE)
     displayName: 'SETUP: Validate JMX File'
+  - task: AzureLoadTest@1
+    inputs:
+      azureSubscription: 'Paiement à l’utilisation(1ad44334-f828-4bde-a49e-7de4f43ce1ba)'
+      resourceGroup: infra-01_group
+      loadTestResource: Parcours1
