@@ -45,11 +45,17 @@ steps:
     displayName: 'SETUP: Validate JMX File'
   
   - script: |
-      az ad sp show --id 296d820d-4bb2-4fd3-89d1-c6c01017d26e
-      az vm list
-      az role assignment create --assignee "296d820d-4bb2-4fd3-89d1-c6c01017d26e" \
-      --role "Load Test Contributor" \
-      --scope /subscriptions/1ad44334-f828-4bde-a49e-7de4f43ce1ba/resourceGroups/infra-01_group \
-      --subscription 'Paiement à l’utilisation(1ad44334-f828-4bde-a49e-7de4f43ce1ba)'
+      - task: AzureCLI@2
+        inputs:
+          azureSubscription: 'Paiement à l’utilisation(1ad44334-f828-4bde-a49e-7de4f43ce1ba)'
+          scriptType: 'bash'
+          scriptLocation: 'inlineScript'
+          inlineScript: |
+            az ad sp show --id 296d820d-4bb2-4fd3-89d1-c6c01017d26e
+            az vm list
+            az role assignment create --assignee "296d820d-4bb2-4fd3-89d1-c6c01017d26e" \
+              --role "Load Test Contributor" \
+              --scope /subscriptions/1ad44334-f828-4bde-a49e-7de4f43ce1ba/resourceGroups/infra-01_group \
+              --subscription 'Paiement à l’utilisation(1ad44334-f828-4bde-a49e-7de4f43ce1ba)'
 
 
